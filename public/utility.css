@@ -1,0 +1,121 @@
+.flex{
+    display: flex;
+}
+
+.m-1{
+    margin: 3;
+}
+
+.invert{
+    filter: invert(1);
+}
+
+.buttons * {
+    font-weight: bold;
+    margin: 11px 0px;
+}
+
+.login{
+        padding: 2px 9px;
+    border-radius: 10px;
+    background-color: rgb(147, 87, 251);
+    color: white;
+    cursor: pointer;
+}
+
+.login:hover{
+    transform: scale(1.2);
+
+}
+
+
+
+.signup:hover{
+    transform: scale(1.1112);
+}
+
+
+
+.results{
+    background-color: #201a1a;
+    overflow-y: auto;
+    margin: 5px;
+    padding: 5px;
+
+}
+
+.results ul li img{
+    width: 75px;
+
+}
+
+.results ul li{
+    display: flex;
+    align-items: center;
+    margin: 5px;
+    padding: 5px;
+    gap: 5px;
+    cursor: pointer;
+    border: 2px solid #363738;
+
+}
+
+.results ul li:hover{
+    transform: scale(1.015);
+}
+
+.seekbar{
+   background-color: rgb(255, 255, 255);
+    width: 99%;
+    height: 4px;
+    margin: 0px 6px;
+    position: relative;
+    bottom: 5px;
+    cursor: pointer;
+}
+.buttonsbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.circle{
+    background-color: red;
+    width: 12px;
+    height: 12px;
+    border-radius: 13px;
+    position: absolute;
+    bottom: -5px;
+    left: 0%;
+    transition: left 0.5s;
+}
+
+.currenttime , .duration{
+    margin: 11px;
+    color: black;
+}
+
+.controls img{
+    cursor: pointer;
+}
+
+.custom-alert {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(30, 30, 30, 0.9); /* Dark with transparency */
+  color: white;
+  padding: 20px 30px;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.custom-alert.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.05);
+}

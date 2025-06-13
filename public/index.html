@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="utility.css">
+</head>
+<body>
+    <audio id="audioPlayer" controls style="display:none;"></audio>
+
+
+    <header class="nav flex">
+        
+            <img class="hamburger invert" src="hamburger.svg" alt="">
+        
+        <div class="logo">
+            <img src="logo.svg" alt="logo" class="logo.svg"> Sangeet
+        </div>
+        <div class="search">
+            <form action="/search" id="search_form"    method="GET">
+                <input
+                  id="search_input"
+                  type="text"
+                  name="query"
+                  placeholder="Search for songs, artists, or albums"
+                  required
+                  spellcheck="false"
+                  autocomplete="off"
+                >
+                <button 
+                  type="submit"
+                 
+                >
+                  Search
+                </button>
+              </form>
+              
+        </div>
+        <div class="buttons">
+            <button class="login">Log In</button>
+            
+        </div>
+    </header>
+
+
+
+    </div>
+    <div class="container flex">
+        
+        <div class="left m-1">
+            <ul>
+                <div class="icon">
+                <li class="home icon"><img class="invert" src="home.svg" alt="home">Home</li>
+                </div>
+                <div class="icon">
+                <li class="playlist icon"> <img class = "invert" src="playlist.svg" alt="playlist" >Playlists</li>
+                </div>
+            </ul>
+            
+        </div>
+        <div class="right m-1">
+            <div class="results">
+                <ul id = "resultList" > 
+                    
+                    
+                     
+                </ul>
+            </div>
+            <div class="playlists">               
+            </div>
+                <div class="card-container flex">
+                   
+                   
+                    
+                    
+                    
+                
+               
+                </div>
+            
+                <div class="playbar" >
+                    
+                    <div class="buttonsbar flex" >
+                        <div  class="currenttime">
+                            
+                        </div>
+                        <div class="controls flex" >
+                            <div class="prev">
+                                <img src="prev.svg" alt="">
+                            </div>
+                            <div  class="play">
+                                <img id="playbutton" src="play.svg"  class =  alt="">
+                            </div>
+                            <div class="next">
+                                <img src="next.svg" alt="">
+                            </div>
+                        </div>
+                        <div class="duration">
+                            
+                        </div>
+                    </div>
+                    <div class="seekbar">
+                        <div class="circle">
+
+                        </div>
+                    </div>
+                </div>
+            
+        </div>
+        
+        
+
+    </div>
+
+   
+    <script src="script2.js"></script>
+    
+</body>
+</html>
