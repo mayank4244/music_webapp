@@ -35,8 +35,18 @@ function startDownload(videoId, url) {
 
   console.log(`[Start] Starting download for videoId: ${videoId} from URL: ${url}`);
 
+  const origCookiesPath = path.resolve('./cookies.txt');       // From root
+  const tempCookiesPath = path.resolve('./temp_cookies.txt');  // Temporary copy
+
+    if (!fs.existsSync(origCookiesPath)) {
+    console.error('cookies.txt not found!');
+  } else {
+    // Copy to a writable temp file
+    fs.copyFileSync(origCookiesPath, tempCookiesPath);
+  }
+
   // yt-dlp download best audio only
-  const ytdlp = spawn('yt-dlp', ['--cookies', '/etc/secrets/cookies.txt',
+  const ytdlp = spawn('yt-dlp', ['--cookies', tempCookiesPath,
                                  '-f', 'bestaudio[ext=webm]/bestaudio/best', 
                                  '-o', filePath, 
                                  url]);
