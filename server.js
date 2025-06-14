@@ -37,6 +37,7 @@ function startDownload(videoId, url) {
 
   // yt-dlp download best audio only
   const ytdlp = spawn('yt-dlp', ['--cookies', '/etc/secrets/cookies.txt',
+                                 '--no-write-cookies',
                                  '-f', 'bestaudio[ext=webm]/bestaudio/best', 
                                  '-o', filePath, 
                                  url]);
