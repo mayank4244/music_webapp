@@ -127,7 +127,21 @@ app.get('/duration', (req, res) => {
 
   console.log(`[Duration] Fetching duration for videoId: ${videoId}`);
 
-  const ytDl = spawn('yt-dlp', ['--get-duration', `https://www.youtube.com/watch?v=${videoId}`]);
+  const origCookies = path.resolve('./cookies.txt');
+  const tempCookies = path.resolve('./temp_cookies.txt');
+
+  if (!fs.existsSync(origCookies)) {
+    console.error(`[Duration] cookies.txt not found`);
+    return res.status(500).json({ error: 'Server missing cookies.txt' });
+  }
+
+  fs.copyFileSync(origCookies, tempCookies);
+
+ const ytDl = spawn('yt-dlp', [
+    '--cookies', tempCookies,
+    '--get-duration',
+    `https://www.youtube.com/watch?v=${videoId}`
+  ]);
 
   let output = '';
   ytDl.stdout.on('data', (data) => {
