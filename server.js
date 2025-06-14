@@ -282,7 +282,7 @@ app.use(passport.session());
 passport.use(new GoogleStrategy({
   clientID: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
-  callbackURL: '/auth/google/callback',
+  callbackURL: 'https://oldify-xsu3.onrender.com/auth/google/callback',
   scope: ['profile', 'email', 'https://www.googleapis.com/auth/youtube.readonly']
 }, (accessToken, refreshToken, profile, done) => {
   // Save profile and tokens to session
