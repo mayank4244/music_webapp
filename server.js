@@ -36,7 +36,10 @@ function startDownload(videoId, url) {
   console.log(`[Start] Starting download for videoId: ${videoId} from URL: ${url}`);
 
   // yt-dlp download best audio only
-  const ytdlp = spawn('yt-dlp', ['-f', 'bestaudio[ext=webm]/bestaudio/best', '-o', filePath, url]);
+  const ytdlp = spawn('yt-dlp', ['--cookies', '/etc/secrets/cookies.txt',
+                                 '-f', 'bestaudio[ext=webm]/bestaudio/best', 
+                                 '-o', filePath, 
+                                 url]);
 
 
   downloadMap[videoId] = { process: ytdlp, status: 'downloading', filePath };
