@@ -2,7 +2,6 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const { spawn } = require('child_process');
-const cron = require('node-cron');
 const ytdlp = require('yt-dlp-exec');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
