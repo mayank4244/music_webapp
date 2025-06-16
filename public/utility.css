@@ -93,6 +93,7 @@
 .currenttime , .duration{
     margin: 11px;
     color: black;
+    width: 48px;
 }
 
 .controls img{
