@@ -121,7 +121,7 @@
 
 .playbar{
        background-color: #008080;
-    height: 54px;
+    height: 80px;
     width: 87.8vw;
     position: fixed;
     bottom: 0px;
@@ -207,7 +207,7 @@
     }
 
     .nav div{
-    margin: 19px 2px 0px 2px;
+    margin: 19px 0px 0px 0px;
     padding: 0px;
     }
 
@@ -217,8 +217,12 @@
         
     }
     
-    
+}
 
-
- 
+.playbartitle{
+    color: black;
+    overflow: hidden;  
+    white-space: nowrap;    
+    text-overflow: ellipsis;
+    margin: 0px 11px;
 }
