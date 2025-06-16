@@ -24,6 +24,14 @@ const playlist = document.querySelector('.playlist');
 const hamburger_icon = document.querySelector('.hamburger');
 const leftSidebar = document.querySelector('.left');
 const home = document.querySelector('.home');
+const playbartitle = document.querySelector('.playbartitle')
+const prevBtn = document.querySelector('.prev')
+const nextBtn = document.querySelector('.next')
+
+let currentVideoId = null;
+let playlistSongs = [];
+let currentSongIndex  = -1;
+
 
 // on clicking on home clear whole page
 home.addEventListener('click', ()=>{
@@ -42,7 +50,7 @@ home.addEventListener('click', ()=>{
     
 })
 
-let currentVideoId = null;
+
 // searchinh for a song...
 searchForm.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -90,7 +98,10 @@ searchForm.addEventListener('submit', async (e) => {
           <small>${channelTitle}</small>
         </div>
       `;
-      li.addEventListener('click', () => playSong(videoId));
+      li.addEventListener('click', () => {
+        currentSongIndex = -1;
+        playlistSongs = [];
+        playSong(videoId, title)});//change pass title 
       resultList.appendChild(li);
     });
 
@@ -100,7 +111,15 @@ searchForm.addEventListener('submit', async (e) => {
   }
 });
 
-async function playSong(videoId) {
+// new function 16-06-25
+function playSongFromPlaylist(index) {
+  if (index < 0 || index >= playlistSongs.length) return;
+  currentSongIndex = index;
+  const song = playlistSongs[index];
+  playSong(song.videoId, song.title);
+}
+
+async function playSong(videoId, title) {
   if (currentVideoId === videoId) {
     if (!audioPlayer.paused) {
       console.log("Pausing current song");
@@ -141,9 +160,12 @@ async function playSong(videoId) {
     console.error("Playback error:", e);
     playButton.src = "play.svg";
     playButton.style.animation = "";
+
   }
 
-  fetchDuration(videoId);
+  fetchDuration(videoId); //changing after this to insert title in playbar
+  playbartitle.innerHTML = title; 
+
 }
 
 async function fetchDuration(videoId) {
@@ -207,6 +229,29 @@ audioPlayer.addEventListener("canplay", () => {
   playButton.style.animation = "";
 });
 
+audioPlayer.addEventListener("ended", () => {
+  if (currentSongIndex !== -1 && currentSongIndex < playlistSongs.length - 1) {
+    playSongFromPlaylist(currentSongIndex + 1);
+  }
+});
+
+prevBtn.addEventListener('click', () => {
+  if (currentSongIndex > 0) {
+    playSongFromPlaylist(currentSongIndex - 1);
+  } else {
+    showAlert("You're at the first song");
+  }
+});
+
+nextBtn.addEventListener('click', () => {
+  if (currentSongIndex < playlistSongs.length - 1) {
+    playSongFromPlaylist(currentSongIndex + 1);
+  } else {
+    showAlert("You're at the last song");
+  }
+});
+
+
 //// login part from here and fetching playlists after login...
 
 window.addEventListener('DOMContentLoaded', async ()=>{
@@ -236,11 +281,13 @@ login.addEventListener("click" , ()=>{
 
  playlist.addEventListener('click', async ()=>{
   //making look like its selected
+
   document.querySelectorAll('.icon').forEach(icon => {
     icon.classList.remove('selected');
   });
   playlist.classList.add('selected');
-
+  resultList.innerHTML = '';
+  searchInput.value = '';
   const res = await fetch('/playlists');
   if (res.ok) {
     const playlistData = await res.json();
@@ -336,37 +383,35 @@ function showAlert(message, duration = 3000) {
 async function showSongsFromPlaylist(playlistId, title) {
   const res = await fetch(`/playlistItems?playlistId=${playlistId}`);
   const data = await res.json();
-
   if (data.items) {
     const container = document.querySelector('.card-container');
-    container.innerHTML = ''; // Clear previous cards
+    container.innerHTML = '';
     document.querySelector('.playlists').textContent = `Songs in ${title}`;
+    playlistSongs = [];
+    currentSongIndex = -1;
 
-    data.items.forEach(item => {
+    data.items.forEach((item, index) => {
       const title = item.snippet.title;
       const thumbnail = item.snippet.thumbnails?.default?.url;
+      const videoId = item.snippet.resourceId.videoId;
+      playlistSongs.push({ videoId, title });
 
       const songCard = document.createElement('div');
       songCard.className = 'card';
-
       const thumb = document.createElement('div');
       thumb.className = 'thumbnail';
       thumb.innerHTML = `<img src="${thumbnail}" alt="${title}">`;
-
       const titleDiv = document.createElement('div');
       titleDiv.className = 'title';
       titleDiv.textContent = title;
-
       songCard.appendChild(thumb);
       songCard.appendChild(titleDiv);
-
       container.appendChild(songCard);
 
-      songCard.addEventListener('click', () => playSong(item.snippet.resourceId.videoId));
-      
-    
-
-
+      songCard.addEventListener('click', () => {
+        currentSongIndex = index;
+        playSongFromPlaylist(index);
+      });
     });
   } else {
     console.error('Failed to load songs');
