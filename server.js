@@ -13,7 +13,7 @@ require('dotenv').config();
 
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const CACHE_DIR = path.resolve(__dirname, 'cache');
 
 if (!fs.existsSync(CACHE_DIR)) {
@@ -387,6 +387,8 @@ app.get('/playlistItems', async (req, res) => {
 
 
 
+const HOST = '0.0.0.0';
 
-
-app.listen(PORT, () => console.log(`[Server] Running at http://localhost:${PORT}`));
+app.listen(PORT, HOST, () => {
+  console.log(`[Server] Running at http://${HOST}:${PORT}`);
+});
