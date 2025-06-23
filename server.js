@@ -35,8 +35,8 @@ function startDownload(videoId, url) {
 
   console.log(`[Start] Starting download for videoId: ${videoId} from URL: ${url}`);
 
-  const origCookiesPath = path.resolve('./cookies.txt');       // From root
-  const tempCookiesPath = path.resolve('./temp_cookies.txt');  // Temporary copy
+  const origCookiesPath = path.join(__dirname, 'cookies.txt');       // From root
+  const tempCookiesPath = path.join(__dirname, 'temp_cookies.txt');  // Temporary copy
 
     if (!fs.existsSync(origCookiesPath)) {
     console.error('cookies.txt not found!');
@@ -127,8 +127,9 @@ app.get('/duration', (req, res) => {
 
   console.log(`[Duration] Fetching duration for videoId: ${videoId}`);
 
-  const origCookies = path.resolve('./cookies.txt');
-  const tempCookies = path.resolve('./temp_cookies.txt');
+  const origCookies = path.join(__dirname, 'cookies.txt');
+  const tempCookies = path.join(__dirname, 'temp_cookies.txt');
+
 
   if (!fs.existsSync(origCookies)) {
     console.error(`[Duration] cookies.txt not found`);
