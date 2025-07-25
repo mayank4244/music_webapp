@@ -1,27 +1,27 @@
-# Use official Node.js 18 base image
-FROM node:18
+# Start from Node.js base image
+FROM node:20
 
-# Install system dependencies: python3, ffmpeg, curl
-RUN apt-get update && \
-    apt-get install -y python3 ffmpeg curl && \
-    ln -sf /usr/bin/python3 /usr/bin/python && \
+# Install Python and other system dependencies
+RUN apt update && apt install -y \
+    python3 \
+    python-is-python3 \
+    ffmpeg \
+    aria2 \
+    curl && \
     curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp && \
-    chmod +x /usr/local/bin/yt-dlp && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    chmod a+rx /usr/local/bin/yt-dlp
 
-# Set working directory inside container
+# Set working directory
 WORKDIR /app
 
-# Copy and install only dependencies first (for better Docker cache reuse)
+# Copy package.json and package-lock.json first
 COPY package*.json ./
+
+# Now run npm install (will succeed because python is available)
 RUN npm install
 
-# Copy the rest of the app
+# Copy the rest of your app
 COPY . .
 
-# Expose the port used by your app (change if different)
-EXPOSE 3000
-
-# Start the app
-CMD ["npm", "start"]
+# Run the app
+CMD ["node", "server.js"]
